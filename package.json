@@ -1,0 +1,33 @@
+{
+    "name": "rest-api",
+    "version": "1.0.0",
+    "description": "This is a rest api for practice purposes",
+    "main": "index.js",
+    "scripts": {
+        "build": "babel . -s -D -d dist --presets env --ignore node_modules",
+        "clean": "rm -rf dist && mkdir dist",
+        "release": "npm run clean && npm run build && npm run serve",
+        "serve": "node dist/server.js",
+        "start": "nodemon server.js --exec babel-node --presets env",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/matew17/rest-api.git"
+    },
+    "author": "Mateo Castaño",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/matew17/rest-api/issues"
+    },
+    "homepage": "https://github.com/matew17/rest-api#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mongoose": "^5.7.12"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "nodemon": "^2.0.1"
+    }
+}
