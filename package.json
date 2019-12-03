@@ -23,6 +23,7 @@
     },
     "homepage": "https://github.com/matew17/rest-api#readme",
     "dependencies": {
+        "crypto": "^1.0.1",
         "express": "^4.17.1",
         "mongoose": "^5.7.12"
     },

@@ -1,6 +1,7 @@
 // import notebook from '../controllers/notebookController';
 import commissionTypes from '../controllers/CommissionTypeController';
 import roles from '../controllers/RoleController';
+import sellers from '../controllers/SellerController';
 
 export default (app) => {
     // app.route('/notes')
@@ -29,4 +30,13 @@ export default (app) => {
     app.route('/roles/:id')
         .get(roles.getByID)
         .delete(roles.delete);
+
+    // Sellers
+    app.route('/sellers')
+        .get(sellers.getAll)
+        .post(sellers.create);
+
+    // app.route('/sellers/:id')
+    // .get(roles.getByID)
+    // .delete(roles.delete);
 };
