@@ -1,29 +1,30 @@
-import CommissionType from '../models/CommissionTypeModel.js';
+import Role from '../models/RoleModel';
+// import CommissionType from '../models/CommissionTypeModel'
 
 exports.getByID = (req, res) => {
-    CommissionType.findById(req.params.id, (err, data) => {
+    Role.findById(req.params.id, (err, data) => {
         if (err) {
             res.send(err);
         }
 
         res.json(data);
-    });
+    }).populate('commissionType');
 };
 
 exports.getAll = (req, res) => {
-    CommissionType.find({}, (err, data) => {
+    Role.find({}, (err, data) => {
         if (err) {
             res.send(err);
         }
 
         res.json(data);
-    });
+    }).populate('commissionType');
 };
 
 exports.create = (req, res) => {
-    const commissionType = new CommissionType(req.body);
+    const role = new Role(req.body);
 
-    commissionType.save((err, data) => {
+    role.save((err, data) => {
         if (err) {
             res.send(err);
         }
@@ -34,7 +35,7 @@ exports.create = (req, res) => {
 
 
 exports.delete = (req, res) => {
-    CommissionType.remove({
+    Role.remove({
         _id: req.params.id
     }, (err) => {
         if (err) {

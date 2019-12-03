@@ -7,7 +7,9 @@ import routes from './routes/index.js';
 const app = express();
 
 // DB Connection
-mongoose.connect('mongodb://localhost');
+mongoose.connect('mongodb://localhost')
+    .then(() => console.log('Connection established to the DB'))
+    .catch(err => console.log('Error on connection to the DB', err));
 
 // MiddleWare
 app.use(bodyParser.urlencoded({ extended: true }));
