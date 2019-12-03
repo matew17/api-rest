@@ -6,6 +6,7 @@
     "scripts": {
         "build": "babel . -s -D -d dist --presets env --ignore node_modules",
         "clean": "rm -rf dist && mkdir dist",
+        "kill": "killall -9 node",
         "release": "npm run clean && npm run build && npm run serve",
         "serve": "node dist/server.js",
         "start": "nodemon server.js --exec babel-node --presets env",
