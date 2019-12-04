@@ -1,5 +1,8 @@
 import Seller from '../models/SellerModel';
 import { encrypt, decrypt } from '../utils/decrypt';
+
+import Role from '../models/RoleModel';
+
 // exports.getByID = (req, res) => {
 //     Seller.findById(req.params.id, (err, data) => {
 //         if (err) {
@@ -23,31 +26,44 @@ exports.getAll = (req, res) => {
         });
 
         res.json(data);
-    });
-    // .populate('role');
+    }).populate('role');
 };
 
-
 exports.create = (req, res) => {
-    if (req.body.nit) {
+    if (req.body && req.body.nit && req.body.role) {
         req.body.nit = encrypt(req.body.nit);
-        req.body.penalty = 0;
         req.body.active = true;
 
-        // Saving on data base
-        save(req.body).then((data) => {
-            res.json(data);
-        }).catch(err => {
-            res.send(err);
-        })
+        _getRoleValue(req.body.role)
+            .then(data => {
+                req.body.penalty = data.commissionType.value;
+
+                // Saving on data base
+                _save(req.body)
+                    .then((data) => {
+                        res.json(data);
+                    })
+                    .catch(err => {
+                        res.send(err);
+                    });
+            })
+            .catch(err => {
+                res.send(err);
+            });
+    } else {
+        res.send({ error: 'Missing content on body' })
     }
 };
 
-function save(data) {
+function _save(data) {
     const seller = new Seller(data);
 
     return seller.save();
 };
+
+function _getRoleValue(id) {
+    return Role.findById(id).populate('commissionType');
+}
 
 
 // exports.delete = (req, res) => {
