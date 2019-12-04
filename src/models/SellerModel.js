@@ -29,6 +29,10 @@ const SellerSchema = new Schema({
         type: Number,
         required: "Penalty of the seller is required"
     },
+    comission: {
+        type: Number,
+        required: "Comission of the seller is required"
+    },
     active: {
         type: Boolean,
         required: "State of the seller is required"

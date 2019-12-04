@@ -1,11 +1,9 @@
+import { handleErrors } from '../utils/error-handler';
 import Role from '../models/RoleModel';
-// import CommissionType from '../models/CommissionTypeModel'
 
 exports.getByID = (req, res) => {
     Role.findById(req.params.id, (err, data) => {
-        if (err) {
-            res.send(err);
-        }
+        handleErrors(res, data, err);
 
         res.json(data);
     }).populate('commissionType');
@@ -13,9 +11,7 @@ exports.getByID = (req, res) => {
 
 exports.getAll = (req, res) => {
     Role.find({}, (err, data) => {
-        if (err) {
-            res.send(err);
-        }
+        handleErrors(res, data, err);
 
         res.json(data);
     }).populate('commissionType');
@@ -25,14 +21,11 @@ exports.create = (req, res) => {
     const role = new Role(req.body);
 
     role.save((err, data) => {
-        if (err) {
-            res.send(err);
-        }
+        handleErrors(res, data, err);
 
         res.json(data);
     });
 };
-
 
 exports.delete = (req, res) => {
     Role.remove({
@@ -43,7 +36,7 @@ exports.delete = (req, res) => {
         }
 
         res.json({
-            message: `note ${req.params.id} successfully deleted`
+            message: `${req.params.id} successfully deleted`
         });
     });
 };
