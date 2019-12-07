@@ -50,7 +50,7 @@ exports.create = (req, res) => {
                 res.send(err);
             });
     } else {
-        res.send({ error: 'Missing content on body' });
+        res.status(400).send({ error: 'Missing content' });
     }
 };
 
@@ -68,13 +68,17 @@ exports.delete = (req, res) => {
             .then(data => {
                 // Missing commissionType
                 if (!data && !data.commissionType && !data.commissionType.value) {
-                    res.send({ error: 'Missing commision' });
+                    res.status(400).send({ error: 'Missing commision' });
                 }
 
                 deactivateData = {
-                    active: false,
+                    active: req.body.active,
                     comission: _canculatePenalty(req.body.penalty, data.commissionType.value)
                 };
+
+                if (req.body.active) {
+                    delete deactivateData.comission;
+                }
 
                 Seller.findOneAndUpdate({ _id: req.params.id }, deactivateData,
                     (err, data) => {
@@ -88,7 +92,7 @@ exports.delete = (req, res) => {
             });
 
     } else {
-        res.send({ error: 'Missing content' });
+        res.status(400).send({ error: 'Missing content' });
     }
 };
 
@@ -119,6 +123,7 @@ function _save(data) {
 };
 
 function _canculatePenalty(penalty, commission) {
-    // RoleCommissionTypeValue - (RoleCommissionTypeValue * (PenaltyPercentage / 100))
+    // RoleCommissionTypeValue - (RoleCommissionTypeValue * (PenaltyPercentage / 100));
+    // According to rules, pena;ty will change only the first time a user gets deactivated.
     return commission - (commission * (penalty / 100));
 }

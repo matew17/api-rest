@@ -4,7 +4,7 @@ function handleErrors(res, data, err) {
     }
 
     if (err === null && !data) {
-        res.send({ err: 404 })
+        res.status(404).send({ err: 404 })
     }
 }
 
