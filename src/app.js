@@ -5,9 +5,10 @@ import mongoose from 'mongoose';
 import routes from './routes/index.js';
 
 const app = express();
+const mongoDB = 'mongodb://localhost/selles-db';
 
 // DB Connection
-mongoose.connect('mongodb://localhost')
+mongoose.connect(mongoDB, { useNewUrlParser: true })
     .then(() => console.log('Connection established to the DB'))
     .catch(err => console.log('Error on connection to the DB', err));
 
